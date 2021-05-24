@@ -12,12 +12,15 @@ pip install -r requirements.txt
 ```
 
 #### 3. Load sample data into MySQL
+```bash
 # open mysql bash
 mysql -u <mysql-user> -p
 
 # Give the absolute path of the file
-mysql> source ~/app/countryy.sql
+mysql> source ~/simple-django-project/world.sql
 mysql> exit;
+
+```
 
 
 #### 4. Edit project settings

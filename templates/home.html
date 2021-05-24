@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<h2>All Persons</h2>
+
+<p>
+    <a href="{% url 'post_new' %}">Add person</a>
+</p>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Country</th>
+            <th scope="col">State</th>
+            <th scope="col">District</th>
+            <th scope="col">City</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for person in object_list %}
+        <tr>
+            <td>{{ person.name }}</a></td>
+            <td>{{ person.country}}</td>
+            <td>{{ person.state }}</td>
+            <td>{{ person.district }}</td>
+            <td>{{ person.city }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No person in the database. <a href="{% url 'home' %}">Add the first person</a>.
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

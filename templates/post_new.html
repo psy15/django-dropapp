@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<br>
+<h2>Person Form</h2>
+<form method="post" id="personForm" data-states-url="{% url 'ajax_load_states' %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input class=" btn btn-primary btn-lg" type='Submit' value="Submit">
+</form>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_country").change(function () {
+        const url = $("#personForm").attr("data-states-url");
+        const countryId = $(this).val();
+        console.log(countryId)
+        $.ajax({                       // initialize an AJAX request
+            url: url,
+            data: {
+                'country_id': countryId
+            },
+            success: function (data) {
+                console.log(data);
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (state) {
+                    html_data += `<option value="${state.id}">${state.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_state").html(html_data);
+
+            }
+        });
+    });
+
+
+    $("#id_state").change(function () {
+        const url = $("#personForm").attr("data-districts-url");
+        const stateId = $(this).val();
+        console.log(stateId)
+        $.ajax({                       // initialize an AJAX request
+            url: '{% url 'ajax_load_districts' %}',
+            data: {
+                'state_id': stateId
+            },
+            success: function (data) {
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (district) {
+                    html_data += `<option value="${district.id}">${district.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_district").html(html_data);
+
+
+            }
+        });
+    });
+
+
+    $("#id_district").change(function () {
+        const url = $("#personForm").attr("data-cities-url");
+        const districtId = $(this).val();
+        console.log(districtId)
+        $.ajax({
+            url: '{% url 'ajax_load_cities' %}',
+            data: {
+                'district_id': districtId
+            },
+            success: function (data) {
+
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (city) {
+                    html_data += `<option value="${city.id}">${city.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_city").html(html_data);
+
+
+            }
+        });
+    });
+</script>
+
+{% endblock content %}

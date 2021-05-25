@@ -1,5 +1,6 @@
 # django-dropapp
-### Installation
+4 way chained dependent drop-down list in django (with ajax request) and mysql database
+## Running the Project Locally
 #### 1. Clone git repository
 ```bash
 git clone "https://github.com/psy15/django-dropapp.git"
